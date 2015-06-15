@@ -1,3 +1,0 @@
-    <h1><%= this.name %></h1>
-    <h2><%= this.category %></h2>
-
