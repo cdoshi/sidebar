@@ -1,0 +1,45 @@
+define(function (require) {
+
+    "use strict";
+
+    var $               = require('jquery'),
+        _               = require('underscore'),
+        Backbone        = require('backbone'),
+        RepoListView    = require('app/views/RepoListView'),
+        models          = require('app/models/repos'),
+        tplText         = require('text!tpl/Home.html'),
+        template        = _.template(tplText);
+
+
+    return Backbone.View.extend({
+
+        initialize: function () {
+            this.repoList = new models.RepoCollection();
+            this.render();
+        },
+
+        render: function () {
+            this.$el.html(template());
+            this.listView = new RepoListView({collection: this.repoList});
+            return this;
+        },
+
+        events: {
+            "keyup .search-key":    "search",
+            "keypress .search-key": "onkeypress"
+        },
+
+        search: function (event) {
+            var key = $('.search-key').val();
+            this.repoList.fetch({reset: true, data: {name: key}});
+        },
+
+        onkeypress: function (event) {
+            if (event.keyCode === 13) { // enter key pressed
+                event.preventDefault();
+            }
+        }
+
+    });
+
+});

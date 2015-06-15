@@ -1,0 +1,21 @@
+<ul>
+    <% if(repos.length > 0) { %>
+
+        <% for (var i = 0;i < repos.length;i++) { %>
+            <li data-repo="#repos/<%= repos[i].id %>">
+
+                <% if(repos[i].category.indexOf('public') > -1 && repos[i].category.indexOf('sources') > -1) { %>
+                    <span class="fa fa-book"></span>
+                <% } else if(repos[i].category.indexOf('public') > -1 && repos[i].category.indexOf('forks') > -1) { %>
+                    <span class="fa fa-code-fork"></span>
+                <% } else if(repos[i].category.indexOf('private') > -1) { %>
+                    <span class="fa fa-lock"></span>
+                <% } %>
+                    <span class="repo"><%= repos[i].name %></span>
+            </li>
+
+        <% } %>
+    <% } else { %>
+        <li>No match found!</li>    
+    <% } %>
+</ul>

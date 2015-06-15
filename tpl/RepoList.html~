@@ -1,0 +1,8 @@
+<ul>
+<% for (var i = 0;i < repos.length;i++) { %>
+<li>
+    <a href="#repos/" + <%= this[i].id %> + ">"
+    <p><%= repos[i].name %></p><p><%= repos[i].category %></p></a>
+</li>
+<% } %>
+</ul>

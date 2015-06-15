@@ -1,0 +1,12 @@
+<div class="sidebar">
+    <div class="sidebar-header">
+	Repositories
+    </div>
+    <div class="sidebar-body">
+        
+    </div>
+    <input class="search-box" placeholder="search">
+    <div class="scroller"></div>
+</div>
+
+

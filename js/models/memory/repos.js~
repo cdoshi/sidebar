@@ -1,0 +1,89 @@
+define(function (require) {
+
+    "use strict";
+
+    var $           = require('jquery'),
+        Backbone    = require('backbone'),
+
+        findRepoById = function (id) {
+            var deferred = $.Deferred(),
+                repo = null,
+                l = repos.length;
+            for (var i = 0; i < l; i++) {
+                if (repos[i].id === id) {
+                    repo = repos[i];
+                    break;
+                }
+            }
+            deferred.resolve(repo);
+            return deferred.promise();
+        },
+
+        findRepoByName = function (searchKey) {
+            var deferred = $.Deferred();
+            var results = repos.filter(function (element) {
+                return element.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            });
+            deferred.resolve(results);
+            return deferred.promise();
+        },
+
+        repos = [
+            {   id: 1,
+                name: "CSS Animation",
+                category: "Public"
+            },
+            {   id: 2,
+                name: "JSON Parser",
+                category: "Private"
+            },
+            {   id: 3,
+                name: "Charting Library",
+                category: "Public"
+            },
+            {   id: 4,
+                name: "Matrix Operations",
+                category: "Public"
+            },
+            {   id: 5,
+                name: "JQuery",
+                category: "Forks"
+            },
+            {   id: 6,
+                name: "HighCharts",
+                category: "Sources"
+            }
+        ],
+
+        Repo = Backbone.Model.extend({
+
+            sync: function (method, model, options) {
+                if (method === "read") {
+                    findById(parseInt(this.id)).done(function (data) {
+                        options.success(data);
+                    });
+                }
+            }
+
+        }),
+
+        RepoCollection = Backbone.Collection.extend({
+
+            model: Repo,
+
+            sync: function (method, model, options) {
+                if (method === "read") {
+                    findByName(options.data.name).done(function (data) {
+                        options.success(data);
+                    });
+                }
+            }
+
+        });
+
+    return {
+        Repo: Repo,
+        RepoCollection: RepoCollection
+    };
+
+});
